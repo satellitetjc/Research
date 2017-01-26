@@ -1,0 +1,10 @@
+%将一幅真彩色图像转化为灰度图像，MATLAB代码如下：
+close all;        %关闭当前所有图形窗口
+clear all;        %清空工作空间变量
+clc;              %清屏
+X=inread('football.jpg');    %读取文件格式为.jpg，文件名为football的RGB图像的信息
+I=rgb2gray(x);               %将RGB图像转换为灰度图像
+set(0,'defaultFigurePosition',[100,100,1000,500]);   %修改图像位置的默认设置
+set(0,'defaultFigureColor',[1,0,1]);                 %修改图形北京颜色的设置
+subplot(121),inshow(X);                               
+subplot(122),inshow(I);
