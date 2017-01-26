@@ -4,13 +4,13 @@ clear all;        %清空工作空间变量
 clc;              %清屏
 s=imread('F:\Picture\mars.jpg');    %读取文件格式为.jpg，文件名为football的RGB图像的信息
 t=rgb2gray(s);               %将RGB图像转换为灰度图像
-set(0,'defaultFigurePosition',[100,100,1000,500]);   %修改图像位置的默认设置（图像的现实窗口）
+set(0,'defaultFigurePosition',[100,100,1000,500]);   %修改图像位置的默认设置（图像的显示窗口）
 set(0,'defaultFigureColor',[1,0,1]);                 %修改图形背景颜色的设置
-subplot(121),imshow(s);                            %显示原RGB图像
+subplot(121),imshow(s);                            %显示原RGB图像,121表示在一个窗口（figure）里，显示图像位置一行两列第一个，下面122是一行两列第二个
 subplot(122),imshow(t);                            %显示转换后灰度图像
 
 
-%输入颜色映射表，利用函数rgb2gray（）生成灰度图像
+%输入颜色映射表（索引表or颜色表），利用函数rgb2gray（）生成灰度图像
 close all;
 clear all;
 clc;
@@ -18,5 +18,46 @@ clc;
 newmap = rgb2gray(map);                            %将彩色颜色映射表转换为灰度颜色映射表，map指颜色表
 set(0,'defaultFigurePosition',[100,100,1000,500];  
 set(0,'defaultFigurePosition',[1,1,1]);
-figure,imshow(X,map);
+figure,imshow(X,map);                              %figure是开窗口
 figure,imshow(X,newmap);
+
+
+%将灰度图像转化为索引图像：
+close all;
+clear all;
+clc
+I = imread('xxxx.tif')
+[X,map]=gray2ind(I,8)                 %实现灰度图像向索引图像的转换，位数N取8
+set(0,'defaultFigurePosition',[100,100,1000,500]; 
+set(0,'defaultFigurePosition',[1,1,1]);
+figure,imshow(X);                              
+figure,imshow(X,map);
+
+
+%将索引图转换为真彩色图像：
+RGB=ind2rgb(X,map);  %索引图是8位的，转换成RGB后成了24位，但效果看起来并没有什么不同
+
+%将灰度图像转换为二值图像：
+close all;
+clear all;
+I=imread('rice.png');
+BW1=im2bw(I,0.4);                 %将灰度图像转换成二值图像，level值设置为0.4（取阈值），大于0.4的转为白色
+BW2=im2bw(I,0.6);                 %im指读取的图
+set(0,'defaultFigurePosition',[100,100,1000,500]; 
+set(0,'defaultFigurePosition',[1,1,1]);
+figure;
+subplot(131),imshow(I);           %131一行三列第一个
+subplot(132),imshow(BW1);
+subplot(133),imshow(BW2);
+
+
+%将索引图像转换为二值图像
+[X,map]=imread('trees.tif');
+BW=im2bw(X,map,0.4);
+....
+figure,imshow(X,map);
+figure,imshow(BW);
+
+
+%将真彩色图像转换为二值图像
+BW=im2BW(I,0.5);
