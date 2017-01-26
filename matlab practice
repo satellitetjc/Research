@@ -2,9 +2,9 @@
 close all;        %关闭当前所有图形窗口
 clear all;        %清空工作空间变量
 clc;              %清屏
-X=inread('football.jpg');    %读取文件格式为.jpg，文件名为football的RGB图像的信息
-I=rgb2gray(x);               %将RGB图像转换为灰度图像
+s=imread('F:\Picture\mars.jpg');    %读取文件格式为.jpg，文件名为football的RGB图像的信息
+t=rgb2gray(s);               %将RGB图像转换为灰度图像
 set(0,'defaultFigurePosition',[100,100,1000,500]);   %修改图像位置的默认设置
-set(0,'defaultFigureColor',[1,0,1]);                 %修改图形北京颜色的设置
-subplot(121),inshow(X);                               
-subplot(122),inshow(I);
+set(0,'defaultFigureColor',[1,0,1]);                 %修改图形背景颜色的设置
+subplot(121),imshow(s);                            %显示原RGB图像
+subplot(122),imshow(t);                            %显示转换后灰度图像
