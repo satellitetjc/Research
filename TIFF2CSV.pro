@@ -9,9 +9,6 @@ pro readtif
     ;get the file name insdead of file path,removing the '.tif' suffix
     outname='F:\DATA\AMSR2_monthly\2016LW_China_ascii\06v\'+FILE_BASENAME(image_files[i],'.tif')+'.txt'
     
-    ;outname='F:\DATA\AMSR2_monthly\2016LW_China_ascii\06v\'+string(i+1)+'.txt'
-    ;outname=image_files[i]+'.txt'
-    ;FILE_BASENAME
     write_csv,outname,data
     print,outname
   endfor
