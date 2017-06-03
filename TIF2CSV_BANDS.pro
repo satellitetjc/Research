@@ -1,3 +1,5 @@
+;解决了多波段图像转成csv格式的问题，这个例子是3个波段的，解决方案是直接数组按列排，但是数组之没有空格隔开
+
 pro TIF2CSV_BANDS
   COMPILE_OPT idl2
   ENVI,/restore_base_save_files
