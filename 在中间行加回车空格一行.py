@@ -1,3 +1,4 @@
+#会出现一个小问题：找不到路径，在spyder按ctrl+shift+alt+p在按run修改路径
 import sys, string, os
 
 dir = "F:\Training"
