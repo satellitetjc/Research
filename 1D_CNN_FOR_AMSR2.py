@@ -32,6 +32,12 @@ def smc_retrieval(channel_size=14, filter_length, nb_input_lw=1, nb_output_smc=1
 def make_lw_pixel(lw_csv,lw_list):
    for file in os.listdir("E:\\TJC\\2016LW_NC_ASCII\\JULY"):
       lw_csv[file] = np.loadtxt(open(file,"rb"),delimiter=",",skiprows=0)
-      lw_list[file] = lw_csv[file].reshape(17271) #每个csv文件171*101大小，171*101=17271
+      lw_list[file] = lw_csv[file].reshape(17271) #每个csv文件171*101大小，171*101=1727 
+      trainin = np.zeros((lw_list[1].shape[0],channel_size=14,nb_input_lw=1),dtype=float)
+    for i in range(0,lw_list[1].shape[0]):
+       trainin[i] = [[lw_list[1][i]],[lw_list[2][i]],[lw_list[3][i]],[lw_list[4][i]],[lw_list[5][i]],[lw_list[6][i]]
+                      ,[lw_list[7][i]],[lw_list[8][i]],[lw_list[9][i]],[lw_list[10][i]],[lw_list[11][i]],[lw_list[12][i]]
+                      ,[lw_list[13][i]],[lw_list[14][i]]]
+      
    
-   channel = 3
+
