@@ -1,15 +1,17 @@
-# Research
-practice
+# 记得打开spyder时记得打开tensorflow环境
+# 这个程序和lw、smc数据都放在E:\\TJC\\2016LW_NC_ASCII\\下
 from __future__ import print_function, division
 
 import os
 import sys
+#sys.path.append("C:\\Users\\work\\keras")
+#sys.path.append("C:\\Users\\work\\Anaconda3\\envs\\tensorflow-gpu\\Lib\\site-packages\\tensorflow")
 import numpy as np
 from keras.layers import Convolution1D, Dense, MaxPooling1D, Flatten
 from keras.models import Sequential
 
-def smc_retrieval(channel_size=14, filter_length, nb_input_lw=1, nb_output_smc=1, 
-                  nb_filter=4):
+def smc_retrieval(channel_size, filter_length, nb_input_lw, nb_output_smc, 
+                  nb_filter):
     model = Sequential((
         # The first conv layer learns `nb_filter` filters (aka kernels), each of size ``(filter_length, nb_input_series)``.
         # Its output will have shape (None, window_size - filter_length + 1, nb_filter), i.e., for each position in
@@ -28,19 +30,46 @@ def smc_retrieval(channel_size=14, filter_length, nb_input_lw=1, nb_output_smc=1
     # To perform (binary) classification instead:
     # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['binary_accuracy'])
     return model
- 
-def readcsv(lw_csv，lw_list，trainin，channel_size=14,nb_input_lw=1):
-    for channel in os.listdir("E:\\TJC\\2016LW_NC_ASCII\\JULY"):
-      lw_csv[channel] = np.loadtxt(open(file,"rb"),delimiter=",",skiprows=0)
-      lw_list[channel] = lw_csv[channel].reshape(17271) #每个csv文件171*101大小，171*101=1727 
-    trainin = np.zeros((lw_list[1].shape[0],channel_size=14,nb_input_lw=1),dtype=float)
-      for i in range(0,lw_list[1].shape[0]):
-        trainin[i] = [[lw_list[1][i]],[lw_list[2][i]],[lw_list[3][i]],[lw_list[4][i]],[lw_list[5][i]],[lw_list[6][i]]
-                      ,[lw_list[7][i]],[lw_list[8][i]],[lw_list[9][i]],[lw_list[10][i]],[lw_list[11][i]],[lw_list[12][i]]
-                      ,[lw_list[13][i]],[lw_list[14][i]]]
-    trainin = np.asarry(trainin)
-    x = np.atleast_3d(np.array([trainin[start:start + channel_size] for start in range(0, trainin.shape[0]-channel_size)]))
-    smc = np.loadtxt(open("","rb"),delimiter=",",skiprows=0)
-    y = smc.reshape(17271)
-   
+
+def load_save():
+    path = "E:\\TJC\\2016LW_NC_ASCII\\JULY\\"
+    j = 0
+    lw_csv = np.empty((101,171,14),dtype=float)
+    for i in os.listdir(path):
+        lw_csv[:,:,j] = np.loadtxt(open(i,"rb"),delimiter=",",skiprows=0)
+        j = j + 1
+        #print(lw_csv)
+    relw_csv = lw_csv.reshape(17271,14)
+    #print(relw_csv)
+    X = relw_csv.reshape(17271,14,1)
+    smc_csv = np.loadtxt(open("E:\\TJC\\2016LW_NC_ASCII\\smc_201607.csv","rb"),delimiter=",",skiprows=0) 
+    Y = smc_csv.reshape(17271,1)
+   # print(X)
+   # print(Y)
+    return X, Y       
+#load_save()
+
+def evaluate_train():
+    filter_length = 4
+    nb_filter = 4
+    model = smc_retrieval(channel_size=14, filter_length=filter_length,
+                          nb_input_lw=1, nb_output_smc=1, nb_filter=nb_filter)
+    model.summary()
+    
+    X, Y = load_save()
+    test_size = int(0.2 * 17271)
+    X_train, X_test, Y_train, Y_test = X[:-test_size], X[-test_size:], Y[:-test_size], Y[-test_size:]
+    model.fit(X_train, Y_train, nb_epoch=25, batch_size=2, validation_data=(X_test, Y_test))
+    pred = model.predict(X_test)
+    print('\n\nactual', 'predicted', sep='\t')
+    for actual, predicted in zip(Y_test, pred.squeeze()):
+        print(actual.squeeze(), predicted, sep='\t')
+    #print('next', model.predict(q).squeeze(), sep='\t')
+    
+def main():
+    np.set_printoptions(threshold=25)
+    evaluate_train()
+    
+if __name__ == '__main__':
+    main()
 
