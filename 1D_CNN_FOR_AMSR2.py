@@ -64,7 +64,7 @@ def evaluate_train():
     #print('next', model.predict(q).squeeze(), sep='\t')
     
 def main():
-    np.set_printoptions(threshold=25)
+    np.set_printoptions(threshold=1) #输出起始点
     evaluate_train()
     
 if __name__ == '__main__':
