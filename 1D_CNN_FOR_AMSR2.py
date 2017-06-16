@@ -1,11 +1,8 @@
 # 记得打开spyder时记得打开tensorflow环境
-# 这个程序和lw、smc数据都放在E:\\TJC\\2016LW_NC_ASCII\\下
+# 这个程序和lw、smc数据都放在E:\\TJC\\2016LW_NC_ASCII\\下，亮温数据同时在E:\\TJC\\2016LW_NC_ASCII\\JULY文件夹下
 from __future__ import print_function, division
 
 import os
-import sys
-#sys.path.append("C:\\Users\\work\\keras")
-#sys.path.append("C:\\Users\\work\\Anaconda3\\envs\\tensorflow-gpu\\Lib\\site-packages\\tensorflow")
 import numpy as np
 from keras.layers import Convolution1D, Dense, MaxPooling1D, Flatten
 from keras.models import Sequential
