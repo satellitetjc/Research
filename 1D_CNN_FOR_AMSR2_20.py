@@ -1,4 +1,4 @@
-#说明：加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
+#说明：通道维卷积的新版本，加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
 from __future__ import print_function, division
 import os
 import numpy as np
