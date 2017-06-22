@@ -1,4 +1,6 @@
 #说明：通道维卷积的新版本，加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
+#2017.6.21更：似乎不要batchnormalzation更好，8.28号的数据，中国中部地区（2537个像元），loss层mse，metrics层只是评估性能，不用来训练网络，epoch8000，batchsize300
+#R方能达到0.65左右
 from __future__ import print_function, division
 import os
 import numpy as np
@@ -18,12 +20,12 @@ def smc_retrieval(channel_size, filter_length, nb_input_lw, nb_output_smc,
         model.add(Convolution1D(nb_filter=nb_filter, filter_length=filter_length, 
                       activation='relu'))
         model.add(MaxPooling1D())
-        model.add(Dropout(0.25))
+        model.add(Dropout(0.05))
         model.add(Flatten())
         model.add(Dense(1000))
         model.add(Activation('relu'))
-        model.add(Dropout(0.5))
-        model.add(BatchNormalization())
+        #model.add(Dropout(0.5))
+        #model.add(BatchNormalization())
         model.add(Dense(nb_output_smc, activation='linear'))     # For binary classification, change the activation to 'sigmoid'
         model.compile(loss='mse', optimizer='adam', metrics=['mae'])
     # To perform (binary) classification instead:
