@@ -1,6 +1,7 @@
 #说明：通道维卷积的新版本，加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
 #2017.6.21更：似乎不要batchnormalzation更好，8.28号的数据，中国中部地区（2537个像元），loss层mse，metrics层只是评估性能，不用来训练网络，epoch8000，batchsize300
 #R方能达到0.65左右
+#2017.6.23更：第二次卷积不再默认，改成60个卷积核；输出层的激活函数由linear改成relu；最重要的一点是X进行了规范化，用keras.utils的工具normalize
 from __future__ import print_function, division
 import os
 import numpy as np
@@ -17,7 +18,7 @@ def smc_retrieval(channel_size, filter_length, nb_input_lw, nb_output_smc,
                       activation='relu', input_shape=(channel_size, 
                                                       nb_input_lw)))
         model.add(MaxPooling1D())    # Downsample the output of convolution by 2X.
-        model.add(Convolution1D(nb_filter=nb_filter, filter_length=filter_length, 
+        model.add(Convolution1D(60, filter_length=filter_length, 
                       activation='relu'))
         model.add(MaxPooling1D())
         model.add(Dropout(0.05))
@@ -26,7 +27,7 @@ def smc_retrieval(channel_size, filter_length, nb_input_lw, nb_output_smc,
         model.add(Activation('relu'))
         #model.add(Dropout(0.5))
         #model.add(BatchNormalization())
-        model.add(Dense(nb_output_smc, activation='linear'))     # For binary classification, change the activation to 'sigmoid'
+        model.add(Dense(nb_output_smc, activation='relu'))     # For binary classification, change the activation to 'sigmoid'
         model.compile(loss='mse', optimizer='adam', metrics=['mae'])
     # To perform (binary) classification instead:
     # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['binary_accuracy'])
@@ -53,6 +54,7 @@ def load_save():
     #S = np.zeros((5200,15,1),dtype=float)
     S = np.random.permutation(A)
     X = S[:, :14, :]
+    X_NOL = normalize(X, asix=1, order=2) # asix = 1 指的是第二维，对通道维进行规范化，order = 2指进行L2规范化
     Y_L = S[:, 14:, :]
     Y = Y_L.reshape(5200,1)
     #print(Y_L)
