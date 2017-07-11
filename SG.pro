@@ -22,4 +22,5 @@ PRO SGFilter, Nleft, Nright, Order, Degree
   SGdata = transpose(SGdata)
   
   outname='E:\...'+FILE_BASENAME(spectrum_files[i],'.csv')+'_sg.csv'  
-  
+
+END
