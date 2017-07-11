@@ -1,4 +1,4 @@
-;对光谱曲线进行sg滤波操作
+;对光谱曲线进行sg滤波操作，先转成tiff再操作
 PRO test, Nleft, Nright, Order, Degree
   ; REFERENCE: HELP about SAVGOL
   ; Specify the following parameters!!!
