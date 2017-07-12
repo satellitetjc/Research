@@ -1,6 +1,6 @@
 PRO sgtxt
   
-  ;原始数据文件路径，一列反射率数据，保存为txt文件，最后结果输出为csv文件，可用excel打开
+  ;原始数据文件路径，一列反射率数据，保存为txt文件
   file = 'C:\Users\xxxx\Desktop\22\55555.txt'
   
   ;获取数据行数line
