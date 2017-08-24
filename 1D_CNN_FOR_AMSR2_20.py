@@ -1,9 +1,10 @@
-#说明：通道维卷积的新版本，加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
+#说明1：利用一维cnn做土壤水分反演，输入数据是14个通道亮温，目标数据是amsr2的jaxa土壤水分产品，日数据。
+#说明2：通道维卷积的新版本，加了batchnormalzation层，加了dropout层以防过拟合，2016年7月28日的数据，加了全连接层1000个节点，打乱了数据，验证样本和测试样本不是同一个
 #2017.6.21更：似乎不要batchnormalzation更好，8.28号的数据，中国中部地区（2537个像元），loss层mse，metrics层只是评估性能，不用来训练网络，epoch8000，batchsize300
 #R方能达到0.65左右
 #2017.6.23更：第二次卷积不再默认，改成60个卷积核；输出层的激活函数由linear改成relu；最重要的一点是X进行了规范化，用keras.utils的工具normalize
 #2017.7.20更：解决文件路径的问题，解决办法是创建相对路径。首先代码所在的文件夹和工作环境，如果直接用os。listdir（）他只会搜索工作环境里的文件，所以用o
-#os.chdir()穿件相对路径，这些文件夹是放在工作环境里的
+#os.chdir()创建相对路径，这些文件夹是放在工作环境里的
 from __future__ import print_function, division
 import os
 import numpy as np
