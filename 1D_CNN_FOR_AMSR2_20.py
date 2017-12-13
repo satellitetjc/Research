@@ -5,6 +5,7 @@
 #2017.6.23更：第二次卷积不再默认，改成60个卷积核；输出层的激活函数由linear改成relu；最重要的一点是X进行了规范化，用keras.utils的工具normalize
 #2017.7.20更：解决文件路径的问题，解决办法是创建相对路径。首先代码所在的文件夹和工作环境，如果直接用os。listdir（）他只会搜索工作环境里的文件，所以用o
 #os.chdir()创建相对路径，这些文件夹是放在工作环境里的
+#AIEM模型模拟出来的数据必须转换成csv格式，直接numpy.loadtxt(open(i))即可
 from __future__ import print_function, division
 import os
 import numpy as np
